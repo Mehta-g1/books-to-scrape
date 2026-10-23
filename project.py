@@ -49,9 +49,10 @@ def get_one_book(book_html, book_no):
         msg = f'Error at book no. {book_no} : {e}'
         errors.append(msg)
         print(msg)
+        return None
     return [book_no, book_name, price, star_rating, in_stock]
 
-i=0
+book_serial=0
 df = df = pd.DataFrame(columns=['Serial No.', 'Book Name', 'Price', 'Rating', 'Stock'])
 
 with ThreadPoolExecutor(max_workers=10) as executor:
@@ -64,8 +65,8 @@ with ThreadPoolExecutor(max_workers=10) as executor:
             continue
         print("-"*20,f'\nPage No. {page_no}\n',"-"*20,'\n')
         for book_html in books_sections:
-            i+=1
-            book_info_clear = get_one_book(book_html, i)
+            book_serial+=1
+            book_info_clear = get_one_book(book_html, book_serial)
             if not book_info_clear:
                 continue
 
